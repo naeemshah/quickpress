@@ -3,7 +3,9 @@ import  { RefreshControl } from 'react-native';
 import {Spinner,Item,Input,Icon, Root,Container, Header, Content, List, ListItem, Thumbnail, Text, Body,Button } from 'native-base';
 import { connect } from 'react-redux';
 import {  getProducts } from '.././actions/productsAction';
-import {BarcodeApp} from '.././components/barcodeReader'
+import {BarcodeApp} from './barcodeReader'
+import {StoreConnectComp} from './storeConnectComp'
+
 
 
  
@@ -61,30 +63,13 @@ export  class HomeComp extends Component<Props> {
 
     }
 
-
-     if(this.props.barCode){
-
-      let br = this.props.barCode.split("|");
-
-      return (
-  <Container>
-               <Content>
-          <Item success>
-            <Input placeholder='Textbox with Success Input' value={br[0]}/>
-            <Icon name='checkmark-circle' />
-          </Item>
-          <Item success>
-            <Input placeholder='Textbox with Success Input' value={br[1]}/>
-            <Icon name='checkmark-circle' />
-          </Item>
-        </Content>
-
-            </Container>
+    return (
+  <Root>
+    <StoreConnectComp />
+  </Root>
     );
 
-    }
-    
-   
+
     return (
       <Root>
            <Container>

@@ -69,7 +69,7 @@ export class StoreConnectComp extends Component<Props> {
 
             <Col style={{ marginRight: 10 }}>
               <Button block  onPress={this.showBC.bind(this)}>
-                <Text>Read Barcode</Text>
+                <Text>Barcode Scan</Text>
               </Button>
             </Col>
           </Grid>

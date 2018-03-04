@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View, Alert } from 'react-native';
+import { AppRegistry,BackAndroid, StyleSheet, Text, View, Alert,Platform } from 'react-native';
 
 import BarcodeScanner, {
   Exception,
@@ -9,19 +9,42 @@ import BarcodeScanner, {
   pauseScanner,
   resumeScanner,
 } from 'react-native-barcode-scanner-google';
+import {Button} from 'native-base';
 import { connect } from 'react-redux';
+
+let listener = null
 
 @connect(store => {
   return {
     barCode: store.storeData.barCode,
   };
 })
+
+
 export class BarcodeApp extends Component {
+
+backButtonPressFunction(){
+   this.props.dispatch({ type: 'BARCODE_STATUS', payload: false });
+}
+
+hideBC() {
+    this.props.dispatch({ type: 'BARCODE_STATUS', payload: false });
+  }
+
+  componentDidMount() {
+    if (Platform.OS == "android" && listener == null) {
+      listener = BackAndroid.addEventListener("hardwareBackPress", () => {
+        return this.backButtonPressFunction()
+      })
+    }
+  }
+
+
   render() {
     return (
       <View style={{ flex: 1 }}>
         <BarcodeScanner
-          style={{ flex: 1 }}
+          style={{ flex: .95, marginBottom:10}}
           onBarcodeRead={({ data, type }) => {
             this.props.dispatch({ type: 'SET_BARCODE', payload: data });
             this.props.dispatch({ type: 'BARCODE_STATUS', payload: false });
@@ -41,13 +64,17 @@ export class BarcodeApp extends Component {
             }
           }}
           focusMode={FocusMode.AUTO /* could also be TAP or FIXED */}
-          cameraFillMode={CameraFillMode.FIT /* could also be FIT */}
+          cameraFillMode={CameraFillMode.COVER /* could also be FIT */}
           barcodeType={
             BarcodeType.CODE_128 |
             BarcodeType.EAN_13 |
             BarcodeType.EAN_8 /* replace with ALL for all alternatives */
           }
         />
+
+        <Button block  info onPress={this.hideBC.bind(this)}>
+                <Text>Go Back</Text>
+              </Button>
       </View>
     );
   }

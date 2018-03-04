@@ -1,105 +1,118 @@
 import React, { Component } from 'react';
-import  { RefreshControl } from 'react-native';
-import {Spinner,Item,Input,Icon, Root,Container, Header, Content, List, ListItem, Thumbnail, Text, Body,Button } from 'native-base';
+import { RefreshControl } from 'react-native';
+import {
+  Spinner,
+  Item,
+  Input,
+  Icon,
+  Root,
+  Container,
+  Header,
+  Content,
+  List,
+  ListItem,
+  Thumbnail,
+  Text,
+  Body,
+  Button,
+} from 'native-base';
 import { connect } from 'react-redux';
-import {  getProducts } from '.././actions/productsAction';
-import {BarcodeApp} from './barcodeReader'
-import {StoreConnectComp} from './storeConnectComp'
-
-
-
- 
+import { getProducts } from '.././actions/productsAction';
+import { BarcodeApp } from './barcodeReader';
+import { StoreConnectComp } from './storeConnectComp';
 
 @connect(store => {
   return {
     products: store.product.products,
-    loading:store.product.loading,
+    loading: store.product.loading,
     showBarCodeScanner: store.storeData.showBarCodeScanner,
-    barCode:store.storeData.barCode
-  }; 
+    barCode: store.storeData.barCode,
+  };
 })
-
-
-export  class HomeComp extends Component<Props> {
-
+export class HomeComp extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
       isRefreshing: false,
-      loading:true
+      loading: true,
     };
   }
 
-  componentDidMount(){
-        this.getProducts();  
+  componentDidMount() {
+    this.getProducts();
   }
 
-  componentDidUpdate(){
-     if(this.state.loading !== this.props.loading)
-     this.setState({loading:(this.props.loading)?true:false});
+  componentDidUpdate() {
+    if (this.state.loading !== this.props.loading)
+      this.setState({ loading: this.props.loading ? true : false });
   }
 
-  getProducts(){
-     this.props.dispatch(getProducts());
+  getProducts() {
+    this.props.dispatch(getProducts());
   }
 
-
-  showBC(){
-     this.props.dispatch({type:"BARCODE_STATUS",payload:true});
+  showBC() {
+    this.props.dispatch({ type: 'BARCODE_STATUS', payload: true });
   }
-
- 
-
 
   render() {
-       
-    if(this.props.showBarCodeScanner){
-
+    if (this.props.showBarCodeScanner) {
       return (
-  <Container>
-                <BarcodeApp />
-            </Container>
-    );
-
+        <Container>
+          <BarcodeApp />
+        </Container>
+      );
     }
 
     return (
-  <Root>
-    <StoreConnectComp />
-  </Root>
+      <Root>
+        <StoreConnectComp />
+      </Root>
     );
-
 
     return (
       <Root>
-           <Container>
-        <Header />
-        <Content>
-        <Spinner color='green' style={(this.state.loading) ? {} : {display:"none"}} />
-        <Text style={(this.state.loading) ? {textAlign:"center"} : {display:"none"}}>Loading Products...</Text>
-          <List>
-          {this.props.products.map((e,i)=>{
-               return (
-                <ListItem>
-              <Thumbnail square size={80} source={{ uri: e.images[0].src }} />
-              <Body>
-                <Text>{e.name}</Text>
-                <Text note>Stock : {(!e.stock_quantity)?0:e.stock_quantity}</Text>
-              </Body>
-            </ListItem>
+        <Container>
+          <Header />
+          <Content>
+            <Spinner
+              color="green"
+              style={this.state.loading ? {} : { display: 'none' }}
+            />
+            <Text
+              style={
+                this.state.loading
+                  ? { textAlign: 'center' }
+                  : { display: 'none' }
+              }
+            >
+              Loading Products...
+            </Text>
+            <List>
+              {this.props.products.map((e, i) => {
+                return (
+                  <ListItem>
+                    <Thumbnail
+                      square
+                      size={80}
+                      source={{ uri: e.images[0].src }}
+                    />
+                    <Body>
+                      <Text>{e.name}</Text>
+                      <Text note>
+                        Stock : {!e.stock_quantity ? 0 : e.stock_quantity}
+                      </Text>
+                    </Body>
+                  </ListItem>
                 );
-          })}
-         
-            
-          </List>
-             <Button onPress={this.showBC.bind(this)}><Text>Read Barcode</Text></Button>
-        </Content>
-
-      </Container>
-
+              })}
+            </List>
+            <Button onPress={this.showBC.bind(this)}>
+              <Text>Read Barcode</Text>
+            </Button>
+          </Content>
+        </Container>
       </Root>
     );
   }
 }
-
-

@@ -39,9 +39,9 @@ export class StoreConnectComp extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      url: '',
-      key: '',
-      secret: '',
+      url: 'http://34.216.246.14/wordpress/',
+      key: 'ck_3c10d383ee830a98b36a6084b83e2a25d6cfb3d1',
+      secret: 'cs_d0fe5df2a4dba8791bf2c9a3299e6dccea3ca19a',
       urlE: '#cccccc',
       keyE: '#cccccc',
       secretE: '#cccccc',
@@ -98,7 +98,7 @@ export class StoreConnectComp extends Component<Props> {
           >
             <Label>Wordpress Store Link</Label>
             <Input
-              value={this.props.url}
+              value={this.state.url}
               onChangeText={url => this.setState({ url })}
             />
           </Item>

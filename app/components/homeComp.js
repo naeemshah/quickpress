@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import { getProducts } from '.././actions/productsAction';
 import { BarcodeApp } from './barcodeReader';
 import { StoreConnectComp } from './storeConnectComp';
+import { FooterComp } from './footerComp';
 
 @connect(store => {
   return {
@@ -111,6 +112,7 @@ export class HomeComp extends Component<Props> {
               <Text>Read Barcode</Text>
             </Button>
           </Content>
+          <FooterComp />
         </Container>
       </Root>
     );

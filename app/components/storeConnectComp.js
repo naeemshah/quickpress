@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, Alert, AsyncStorage } from 'react-native';
 import {
   Spinner,
   Grid,
@@ -24,15 +24,63 @@ import { connect } from 'react-redux';
 import { BarcodeApp } from './barcodeReader';
 import { HeaderComp } from './headerComp';
 
+import { Authentication } from '.././actions/storeConnectActions';
+
 @connect(store => {
   return {
     showBarCodeScanner: store.storeData.showBarCodeScanner,
     barCode: store.storeData.barCode,
+    storeURL: store.storeData.storeUrl,
+    connectBtn: store.storeData.connectBtn,
+    connectBtnText: store.storeData.connectBtnText,
   };
 })
 export class StoreConnectComp extends Component<Props> {
   constructor(props) {
     super(props);
+    this.state = {
+      url: '',
+      key: '',
+      secret: '',
+      urlE: '#cccccc',
+      keyE: '#cccccc',
+      secretE: '#cccccc',
+    };
+  }
+
+  componentDidMount() {
+    this.SetBarCode();
+  }
+
+  componentDidUpdate() {
+    this.SetBarCode();
+  }
+
+  SetBarCode() {
+    let barCode = this.props.barCode ? this.props.barCode.split('|') : null;
+    if (barCode && this.state.key != barCode[0]) {
+      this.setState({ key: barCode[0], secret: barCode[1] });
+    }
+  }
+
+  connectToStore() {
+    let urlC = this.state.url === '' ? 'red' : '#ccc';
+    let keyC = this.state.key === '' ? 'red' : '#ccc';
+    let secretC = this.state.secret === '' ? 'red' : '#ccc';
+    this.setState({ urlE: urlC, keyE: keyC, secretE: secretC });
+    if (
+      this.state.url === '' ||
+      this.state.key === '' ||
+      this.state.secret === ''
+    ) {
+      return;
+    }
+    this.props.dispatch(
+      Authentication(this.state.url, this.state.key, this.state.secret)
+    );
+    // AsyncStorage.setItem('@QuckPress:storeURL', "asfdf");
+    // let response =  AsyncStorage.getItem('@QuckPress:storeURL');
+    //  alert("fdsfd");
   }
 
   showBC() {
@@ -40,35 +88,55 @@ export class StoreConnectComp extends Component<Props> {
   }
 
   render() {
-    let barCode = this.props.barCode ? this.props.barCode.split('|') : null;
-
     return (
       <Container>
         <HeaderComp title={'Connect To Your Store'} left={false} righ={false} />
         <Content>
-          <Item floatingLabel style={{ marginTop: 100 }}>
+          <Item
+            floatingLabel
+            style={{ marginTop: 100, borderColor: this.state.urlE }}
+          >
             <Label>Wordpress Store Link</Label>
-            <Input />
+            <Input
+              value={this.props.url}
+              onChangeText={url => this.setState({ url })}
+            />
           </Item>
 
-          <Item floatingLabel style={{ marginTop: 10 }}>
+          <Item
+            floatingLabel
+            style={{ marginTop: 10, borderColor: this.state.keyE }}
+          >
             <Label>Woo Consumer key</Label>
-            <Input value={(barCode) ? barCode[0] : ""} />
+            <Input
+              value={this.state.key}
+              onChangeText={key => this.setState({ key })}
+            />
           </Item>
-          <Item floatingLabel style={{ marginTop: 10 }}>
+          <Item
+            floatingLabel
+            style={{ marginTop: 10, borderColor: this.state.secretE }}
+          >
             <Label>Woo Consumer secret</Label>
-            <Input value={(barCode) ? barCode[1] : ""} />
+            <Input
+              value={this.state.secret}
+              onChangeText={secret => this.setState({ secret })}
+            />
           </Item>
 
           <Grid style={{ height: 50, marginTop: 25 }}>
             <Col style={{ marginLeft: 10 }}>
-              <Button success disabled={true}>
-                <Text>Connet To Store</Text>
+              <Button
+                onPress={this.connectToStore.bind(this)}
+                success
+                disabled={this.props.connectBtn}
+              >
+                <Text>{this.props.connectBtnText}</Text>
               </Button>
             </Col>
 
             <Col style={{ marginRight: 10 }}>
-              <Button block  onPress={this.showBC.bind(this)}>
+              <Button block onPress={this.showBC.bind(this)}>
                 <Text>Barcode Scan</Text>
               </Button>
             </Col>

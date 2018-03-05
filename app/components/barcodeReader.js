@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { AppRegistry,BackAndroid, StyleSheet, Text, View, Alert,Platform } from 'react-native';
+import {
+  AppRegistry,
+  BackAndroid,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  Platform,
+} from 'react-native';
 
 import BarcodeScanner, {
   Exception,
@@ -9,45 +17,45 @@ import BarcodeScanner, {
   pauseScanner,
   resumeScanner,
 } from 'react-native-barcode-scanner-google';
-import {Button} from 'native-base';
+import { Button } from 'native-base';
 import { connect } from 'react-redux';
 
-let listener = null
+let listener = null;
 
 @connect(store => {
   return {
-    barCode: store.storeData.barCode,
+    barCode: store.storeData,
   };
 })
-
-
 export class BarcodeApp extends Component {
+  backButtonPressFunction() {
+    this.props.dispatch({ type: 'BARCODE_STATUS', payload: false });
+  }
 
-backButtonPressFunction(){
-   this.props.dispatch({ type: 'BARCODE_STATUS', payload: false });
-}
-
-hideBC() {
+  hideBC() {
     this.props.dispatch({ type: 'BARCODE_STATUS', payload: false });
   }
 
   componentDidMount() {
-    if (Platform.OS == "android" && listener == null) {
-      listener = BackAndroid.addEventListener("hardwareBackPress", () => {
-        return this.backButtonPressFunction()
-      })
-    }
+    // if (Platform.OS == 'android' && listener == null) {
+    //   listener = BackAndroid.addEventListener('hardwareBackPress', () => {
+    //     return this.backButtonPressFunction();
+    //   });
+    // }
   }
 
+  componentWillUnmount() {
+    pauseScanner();
+  }
 
   render() {
     return (
       <View style={{ flex: 1 }}>
         <BarcodeScanner
-          style={{ flex: .95, marginBottom:10}}
+          style={{ flex: 0.95, marginBottom: 10 }}
           onBarcodeRead={({ data, type }) => {
             this.props.dispatch({ type: 'SET_BARCODE', payload: data });
-            this.props.dispatch({ type: 'BARCODE_STATUS', payload: false });
+
             //Alert.alert(`Barcode '${data}' of type '${type}' was scanned.`);
           }}
           onException={exceptionKey => {
@@ -72,9 +80,9 @@ hideBC() {
           }
         />
 
-        <Button block  info onPress={this.hideBC.bind(this)}>
-                <Text>Go Back</Text>
-              </Button>
+        <Button block info onPress={this.hideBC.bind(this)}>
+          <Text>Go Back</Text>
+        </Button>
       </View>
     );
   }

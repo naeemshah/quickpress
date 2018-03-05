@@ -6,15 +6,17 @@ export default (product = (
   action
 ) => {
   switch (action.type) {
-    case 'GET_PRODUCT':
+    case 'GET_PRODUCT': {
       let stateN = JSON.parse(JSON.stringify(state));
       stateN.loading = false;
       stateN.products = action.payload.products;
-      return stateN;
-    case 'LOADING_PRODUCT':
-      let stateN2 = JSON.parse(JSON.stringify(state));
-      stateN2.loading = true;
-      return stateN2;
+      return { ...stateN };
+    }
+    case 'LOADING_PRODUCT': {
+      let stateN = JSON.parse(JSON.stringify(state));
+      stateN.loading = true;
+      return { ...stateN };
+    }
     default:
       return state;
   }

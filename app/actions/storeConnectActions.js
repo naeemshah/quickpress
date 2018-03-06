@@ -1,5 +1,7 @@
-import {Buffer} from "buffer";
-import {serverURL} from ".././helper/helper"
+import { Buffer } from 'buffer';
+import { serverURL } from '.././helper/helper';
+import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 
 export function Authentication(url, key, secret) {
   return function(dispatch) {
@@ -8,33 +10,34 @@ export function Authentication(url, key, secret) {
       payload: { dis: true, text: 'Connecting....' },
     });
 
-    let requestData : {endpoint:"system_status",key:key,secret:secret,store_url:url};
-    
-    fetch(serverURL, {
-      method: 'post',
-      headers: {
-          'Content-Type': 'application/json'
-             },
-     body: JSON.stringify(requestData)
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(responseJson => {
+    let requestData = {
+      endpoint: 'products',
+      key: key,
+      secret: secret,
+      store_url: url,
+    };
+    axios
+      .post(serverURL, JSON.stringify(requestData))
+      .then(function(response) {
+        AsyncStorage.setItem(
+          'StoreKeys',
+          JSON.stringify({ storeUrl: url, key: key, secret: secret })
+        );
+        dispatch({
+          type: 'SET_STORE_KEYS',
+          payload: { storeUrl: url, key: key, secret: secret },
+        });
 
         dispatch({
           type: 'SET_CONNECT_BTN',
           payload: { dis: false, text: 'Connect To Store' },
         });
-        alert(JSON.stringify(responseJson));
       })
-      .catch(function(e) {
+      .catch(function(error) {
         dispatch({
           type: 'SET_CONNECT_BTN',
           payload: { dis: false, text: 'Connect To Store' },
         });
-        alert(e);
-        
       });
   };
 }

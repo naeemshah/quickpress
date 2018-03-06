@@ -8,6 +8,8 @@ export default (storeData = function(
     APISecret: '',
     connectBtn: false,
     connectBtnText: 'Connect To Store',
+    StorageKey: '@quickpress',
+    authenticated: false,
   },
   action
 ) {
@@ -22,6 +24,16 @@ export default (storeData = function(
     }
     case 'SET_STORE_URL': {
       return { ...state, storeUrl: action.payload };
+    }
+
+    case 'SET_STORE_KEYS': {
+      return {
+        ...state,
+        storeUrl: action.payload.storeUrl,
+        APIKey: action.payload.key,
+        APISecret: action.payload.secret,
+        authenticated: true,
+      };
     }
 
     case 'SET_CONNECT_BTN': {

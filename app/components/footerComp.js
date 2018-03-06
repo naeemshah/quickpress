@@ -12,16 +12,16 @@ export class FooterComp extends Component<Props> {
       <Footer>
         <FooterTab>
           <Button>
-            <Icon name="apps" />
+            <Icon name="barcode" style={{fontSize:32}} />
           </Button>
           <Button>
-            <Icon name="camera" />
+            <Icon name="graph" style={{fontSize:20}} /> 
           </Button>
           <Button active>
-            <Icon active name="navigate" />
+            <Icon active name="navigate" style={{fontSize:20}} />
           </Button>
           <Button>
-            <Icon name="person" />
+            <Icon name="person" style={{fontSize:20}} />
           </Button>
         </FooterTab>
       </Footer>

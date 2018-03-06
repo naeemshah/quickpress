@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RefreshControl } from 'react-native';
+import { AsyncStorage, RefreshControl } from 'react-native';
 import {
   Spinner,
   Item,
@@ -21,6 +21,7 @@ import { getProducts } from '.././actions/productsAction';
 import { BarcodeApp } from './barcodeReader';
 import { StoreConnectComp } from './storeConnectComp';
 import { FooterComp } from './footerComp';
+import { BlockLoader } from './block_loader';
 
 @connect(store => {
   return {
@@ -28,6 +29,10 @@ import { FooterComp } from './footerComp';
     loading: store.product.loading,
     showBarCodeScanner: store.storeData.showBarCodeScanner,
     barCode: store.storeData.barCode,
+    storeUrl: store.storeData.storeUrl,
+    APIKey: store.storeData.APIKey,
+    APISecret: store.storeData.APISecret,
+    authenticated: store.storeData.authenticated,
   };
 })
 export class HomeComp extends Component<Props> {
@@ -36,20 +41,46 @@ export class HomeComp extends Component<Props> {
     this.state = {
       isRefreshing: false,
       loading: true,
+      showBlockLoader: true,
     };
   }
 
   componentDidMount() {
+    AsyncStorage.getItem('StoreKeys').then(value => {
+      if (value) {
+        let storeData = JSON.parse(value);
+
+        this.props.dispatch({
+          type: 'SET_STORE_KEYS',
+          payload: {
+            storeUrl: storeData.storeUrl,
+            key: storeData.key,
+            secret: storeData.secret,
+          },
+        });
+
+        this.setState({ showBlockLoader: false });
+      }
+    });
     this.getProducts();
   }
 
   componentDidUpdate() {
     if (this.state.loading !== this.props.loading)
       this.setState({ loading: this.props.loading ? true : false });
+
+    this.getProducts();
   }
 
   getProducts() {
-    this.props.dispatch(getProducts());
+    if (this.props.authenticated)
+      this.props.dispatch(
+        getProducts(
+          this.props.storeUrl,
+          this.props.APIKey,
+          this.props.APISecret
+        )
+      );
   }
 
   showBC() {
@@ -57,6 +88,10 @@ export class HomeComp extends Component<Props> {
   }
 
   render() {
+    if (this.state.showBlockLoader) {
+      return <BlockLoader />;
+    }
+
     if (this.props.showBarCodeScanner) {
       return (
         <Container>
@@ -65,11 +100,13 @@ export class HomeComp extends Component<Props> {
       );
     }
 
-    return (
-      <Root>
-        <StoreConnectComp />
-      </Root>
-    );
+    if (!this.props.authenticated) {
+      return (
+        <Root>
+          <StoreConnectComp />
+        </Root>
+      );
+    }
 
     return (
       <Root>
@@ -108,9 +145,6 @@ export class HomeComp extends Component<Props> {
                 );
               })}
             </List>
-            <Button onPress={this.showBC.bind(this)}>
-              <Text>Read Barcode</Text>
-            </Button>
           </Content>
           <FooterComp />
         </Container>

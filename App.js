@@ -10,7 +10,7 @@ import { Provider,connect } from 'react-redux';
 import store from './store';
 import {HomeComp} from './app/components/homeComp'
 
-
+console.disableYellowBox = true; // disable warning 
 
 export default class App extends Component<Props> {
 

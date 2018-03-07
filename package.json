@@ -15,6 +15,7 @@
     "react": "^16.3.0-alpha.1",
     "react-native": "0.54.0",
     "react-native-barcode-scanner-google": "^1.4.2",
+    "react-native-vector-icons": "^4.5.0",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",

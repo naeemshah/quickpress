@@ -15,13 +15,16 @@ import {
   Text,
   Body,
   Button,
+  Drawer
 } from 'native-base';
 import { connect } from 'react-redux';
 import { getProducts } from '.././actions/productsAction';
 import { BarcodeApp } from './barcodeReader';
 import { StoreConnectComp } from './storeConnectComp';
 import { FooterComp } from './footerComp';
+import { SidebarComp } from './sidebarComp';
 import { BlockLoader } from './block_loader';
+import { HeaderComp } from './headerComp';
 
 @connect(store => {
   return {
@@ -46,6 +49,7 @@ export class HomeComp extends Component<Props> {
   }
 
   componentDidMount() {
+   // AsyncStorage.removeItem('StoreKeys');
     AsyncStorage.getItem('StoreKeys').then(value => {
       if (value) {
         let storeData = JSON.parse(value);
@@ -59,8 +63,9 @@ export class HomeComp extends Component<Props> {
           },
         });
 
-        this.setState({ showBlockLoader: false });
+       
       }
+       this.setState({ showBlockLoader: false });
     });
     this.getProducts();
   }
@@ -83,11 +88,18 @@ export class HomeComp extends Component<Props> {
       );
   }
 
+  closeDrawer(){
+
+  }
+
   showBC() {
     this.props.dispatch({ type: 'BARCODE_STATUS', payload: true });
   }
 
   render() {
+
+     
+
     if (this.state.showBlockLoader) {
       return <BlockLoader />;
     }
@@ -111,7 +123,9 @@ export class HomeComp extends Component<Props> {
     return (
       <Root>
         <Container>
-          <Header />
+
+          <HeaderComp title={'Products'} left={false} righ={false} />
+         
           <Content>
             <Spinner
               color="green"

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { RefreshControl } from 'react-native';
-import { Footer, FooterTab, Text, Icon, Button } from 'native-base';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import { Footer, FooterTab, Text, Button } from 'native-base';
 
 export class FooterComp extends Component<Props> {
   constructor(props) {
@@ -12,16 +13,19 @@ export class FooterComp extends Component<Props> {
       <Footer>
         <FooterTab>
           <Button>
-            <Icon name="barcode" style={{fontSize:32}} />
+            <Icon name="barcode"    style={{color:"green"}} /> 
+            <Text>Products</Text>
           </Button>
-          <Button>
-            <Icon name="graph" style={{fontSize:20}} /> 
-          </Button>
-          <Button active>
-            <Icon active name="navigate" style={{fontSize:20}} />
+          
+          <Button >
+            <Icon  name="money" style={{fontSize:20}} />
           </Button>
           <Button>
             <Icon name="person" style={{fontSize:20}} />
+          </Button>
+
+          <Button>
+            <Icon name="log-out" style={{fontSize:20}} />
           </Button>
         </FooterTab>
       </Footer>

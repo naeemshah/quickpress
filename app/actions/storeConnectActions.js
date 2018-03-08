@@ -19,14 +19,20 @@ export function Authentication(url, key, secret) {
     axios
       .post(serverURL, JSON.stringify(requestData))
       .then(function(response) {
+           
+        if(response.status === 200 && response.data.status === "success"){
         AsyncStorage.setItem(
           'StoreKeys',
           JSON.stringify({ storeUrl: url, key: key, secret: secret })
         );
         dispatch({
           type: 'SET_STORE_KEYS',
-          payload: { storeUrl: url, key: key, secret: secret },
+          payload: { storeUrl: url, key: key, secret: secret, auth:true },
         });
+
+      }else{
+        alert("could not connect to store. please check info provided");
+      }
 
         dispatch({
           type: 'SET_CONNECT_BTN',
@@ -34,6 +40,7 @@ export function Authentication(url, key, secret) {
         });
       })
       .catch(function(error) {
+        alert("could not connect to store. please try agian");
         dispatch({
           type: 'SET_CONNECT_BTN',
           payload: { dis: false, text: 'Connect To Store' },

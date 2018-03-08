@@ -49,7 +49,7 @@ export class HomeComp extends Component<Props> {
   }
 
   componentDidMount() {
-   // AsyncStorage.removeItem('StoreKeys');
+    //AsyncStorage.removeItem('StoreKeys');
     AsyncStorage.getItem('StoreKeys').then(value => {
       if (value) {
         let storeData = JSON.parse(value);
@@ -60,6 +60,7 @@ export class HomeComp extends Component<Props> {
             storeUrl: storeData.storeUrl,
             key: storeData.key,
             secret: storeData.secret,
+            "auth":true
           },
         });
 
@@ -73,8 +74,14 @@ export class HomeComp extends Component<Props> {
   componentDidUpdate() {
     if (this.state.loading !== this.props.loading)
       this.setState({ loading: this.props.loading ? true : false });
-
+     
+  if(this.props.products.length === 0)
     this.getProducts();
+
+    
+
+
+     //this.refs.Product_listing.scrollToEnd({animated: true});
   }
 
   getProducts() {
@@ -86,16 +93,27 @@ export class HomeComp extends Component<Props> {
           this.props.APISecret
         )
       );
+
+
+
+   
   }
 
-  closeDrawer(){
-
-  }
+  
 
   showBC() {
     this.props.dispatch({ type: 'BARCODE_STATUS', payload: true });
   }
 
+scrolled(){
+
+}
+closeDrawer = () => {
+  this.drawer._root.close()
+};
+openDrawer = () => {
+  this.drawer._root.open()
+};
   render() {
 
      
@@ -120,11 +138,17 @@ export class HomeComp extends Component<Props> {
       );
     }
 
+    
+
     return (
       <Root>
+      <Drawer
+        ref={(ref) => { this.drawer = ref; }}
+        content={<SidebarComp />}
+        onClose={() => this.closeDrawer()} >
         <Container>
 
-          <HeaderComp title={'Products'} left={false} righ={false} />
+          <HeaderComp openDrawer={this.openDrawer.bind(this)} title={'Products'} left={true} right={true} />
          
           <Content>
             <Spinner
@@ -162,6 +186,7 @@ export class HomeComp extends Component<Props> {
           </Content>
           <FooterComp />
         </Container>
+        </Drawer>
       </Root>
     );
   }

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image,ImageBackground, StatusBar,AsyncStorage } from "react-native";
+import {
+  AppRegistry,
+  Image,
+  ImageBackground,
+  StatusBar,
+  AsyncStorage,
+} from 'react-native';
 import {
   Content,
   View,
@@ -12,52 +18,50 @@ import {
   Right,
   Thumbnail,
   Container,
-
 } from 'native-base';
 
 import { connect } from 'react-redux';
 
-
 @connect(store => {
   return {
-    authenticated: store.storeData.authenticated
+    authenticated: store.storeData.authenticated,
   };
 })
-
-export  class SidebarComp extends Component {
-  logout(){
-    AsyncStorage.removeItem('StoreKeys',).then(()=>{
+export class SidebarComp extends Component {
+  logout() {
+    AsyncStorage.removeItem('StoreKeys').then(() => {
       this.props.dispatch({
         type: 'SET_STORE_KEYS',
-        payload: { storeUrl: "", key:"", secret: "", auth:false },
+        payload: { storeUrl: '', key: '', secret: '', auth: false },
       });
-    })
+    });
   }
   render() {
     return (
       <Container>
-      <Content style={{backgroundColor:"white"}}>
-        <ImageBackground
-          source={{
-            uri: "https://github.com/GeekyAnts/NativeBase-KitchenSink/raw/react-navigation/img/drawer-cover.png"
-          }}
-          style={{
-            height: 120,
-            alignSelf: "stretch",
-            justifyContent: "center",
-            alignItems: "center"
-          }}>
-          <Image
-            square
-            style={{ height: 80, width: 70 }}
+        <Content style={{ backgroundColor: 'white' }}>
+          <ImageBackground
             source={{
-              uri: "https://nativebase.io/assets/img/front-page-icon.png"
+              uri:
+                'https://github.com/GeekyAnts/NativeBase-KitchenSink/raw/react-navigation/img/drawer-cover.png',
             }}
-          />
-        </ImageBackground>
+            style={{
+              height: 120,
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Image
+              square
+              style={{ height: 80, width: 70 }}
+              source={{
+                uri: 'https://nativebase.io/assets/img/front-page-icon.png',
+              }}
+            />
+          </ImageBackground>
 
-
-         <List>
+          <List>
             <ListItem button>
               <Text>Simon Mignolet</Text>
             </ListItem>
@@ -68,10 +72,8 @@ export  class SidebarComp extends Component {
               <Text>Logout</Text>
             </ListItem>
           </List>
-        
-      </Content>
-    </Container>
+        </Content>
+      </Container>
     );
   }
 }
-

@@ -26,27 +26,24 @@ export function getProducts(url, key, secret) {
       key: key,
       secret: secret,
       store_url: url,
-      args:{"per_page":7,"page":1}
+      args: { per_page: 7, page: 1 },
     };
     axios
       .post(serverURL, JSON.stringify(requestData))
       .then(function(response) {
         // alert(response.data);
-        if(response.status === 200 && response.data.status === "success"){
-        dispatch({
-          type: 'GET_PRODUCT',
-          payload: { products: response.data.data},
-        });
-      }else{
-        alert('Error while featching products');
-      }
-
-
-
-
+        if (response.status === 200 && response.data.status === 'success') {
+          console.log(response);
+          dispatch({
+            type: 'GET_PRODUCT',
+            payload: { products: response.data.data },
+          });
+        } else {
+          alert('Error while featching products');
+        }
       })
       .catch(function(error) {
-        alert('Error while featching products');
+        alert('Error while featching products. Error: ' + error);
       });
   };
 }

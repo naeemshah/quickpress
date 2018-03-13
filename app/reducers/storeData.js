@@ -32,7 +32,7 @@ export default (storeData = function(
         storeUrl: action.payload.storeUrl,
         APIKey: action.payload.key,
         APISecret: action.payload.secret,
-        authenticated:action.payload.auth,
+        authenticated: action.payload.auth,
       };
     }
 
@@ -43,8 +43,6 @@ export default (storeData = function(
         connectBtnText: action.payload.text,
       };
     }
-
-  
 
     default: {
       return { ...state };

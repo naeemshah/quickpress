@@ -37,6 +37,7 @@ import { Authentication } from '.././actions/storeConnectActions';
 })
 export class StoreConnectComp extends Component<Props> {
   constructor(props) {
+    console.log('fsdfdsf');
     super(props);
     this.state = {
       url: 'http://34.216.246.14/wordpress/',
@@ -146,3 +147,6 @@ export class StoreConnectComp extends Component<Props> {
     );
   }
 }
+
+
+

@@ -27,3 +27,5 @@ global.fetch = function (uri, options, ...args) {
 
 
 AppRegistry.registerComponent('app', () => App);
+
+

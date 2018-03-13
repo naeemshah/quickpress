@@ -15,7 +15,7 @@ import {
   Text,
   Body,
   Button,
-  Drawer
+  Drawer,
 } from 'native-base';
 import { connect } from 'react-redux';
 import { getProducts } from '.././actions/productsAction';
@@ -25,6 +25,7 @@ import { FooterComp } from './footerComp';
 import { SidebarComp } from './sidebarComp';
 import { BlockLoader } from './block_loader';
 import { HeaderComp } from './headerComp';
+import { ProductListComp } from './Products/productListComp';
 
 @connect(store => {
   return {
@@ -36,11 +37,23 @@ import { HeaderComp } from './headerComp';
     APIKey: store.storeData.APIKey,
     APISecret: store.storeData.APISecret,
     authenticated: store.storeData.authenticated,
+    
   };
 })
 export class HomeComp extends Component<Props> {
+
+  static navigationOptions = {
+    title: "Screen1",
+    gesturesEnabled: false,
+    headerLeft: null,
+    header: null
+  };
+
+
   constructor(props) {
     super(props);
+
+    
     this.state = {
       isRefreshing: false,
       loading: true,
@@ -49,6 +62,7 @@ export class HomeComp extends Component<Props> {
   }
 
   componentDidMount() {
+    //alert(store);
     //AsyncStorage.removeItem('StoreKeys');
     AsyncStorage.getItem('StoreKeys').then(value => {
       if (value) {
@@ -60,64 +74,33 @@ export class HomeComp extends Component<Props> {
             storeUrl: storeData.storeUrl,
             key: storeData.key,
             secret: storeData.secret,
-            "auth":true
+            auth: true,
           },
         });
-
-       
       }
-       this.setState({ showBlockLoader: false });
+      this.setState({ showBlockLoader: false });
     });
-    this.getProducts();
   }
 
   componentDidUpdate() {
     if (this.state.loading !== this.props.loading)
       this.setState({ loading: this.props.loading ? true : false });
-     
-  if(this.props.products.length === 0)
-    this.getProducts();
 
-    
-
-
-     //this.refs.Product_listing.scrollToEnd({animated: true});
+    //this.refs.Product_listing.scrollToEnd({animated: true});
   }
-
-  getProducts() {
-    if (this.props.authenticated)
-      this.props.dispatch(
-        getProducts(
-          this.props.storeUrl,
-          this.props.APIKey,
-          this.props.APISecret
-        )
-      );
-
-
-
-   
-  }
-
-  
 
   showBC() {
     this.props.dispatch({ type: 'BARCODE_STATUS', payload: true });
   }
 
-scrolled(){
-
-}
-closeDrawer = () => {
-  this.drawer._root.close()
-};
-openDrawer = () => {
-  this.drawer._root.open()
-};
+  scrolled() {}
+  closeDrawer = () => {
+    this.drawer._root.close();
+  };
+  openDrawer = () => {
+    this.drawer._root.open();
+  };
   render() {
-
-     
-
     if (this.state.showBlockLoader) {
       return <BlockLoader />;
     }
@@ -138,56 +121,31 @@ openDrawer = () => {
       );
     }
 
-    
-
     return (
       <Root>
-      <Drawer
-        ref={(ref) => { this.drawer = ref; }}
-        content={<SidebarComp />}
-        onClose={() => this.closeDrawer()} >
-        <Container>
-
-          <HeaderComp openDrawer={this.openDrawer.bind(this)} title={'Products'} left={true} right={true} />
-         
-          <Content>
-            <Spinner
-              color="green"
-              style={this.state.loading ? {} : { display: 'none' }}
+        <Drawer
+          ref={ref => {
+            this.drawer = ref;
+          }}
+          content={<SidebarComp />}
+          onClose={() => this.closeDrawer()}
+        >
+          <Container>
+            <HeaderComp
+              openDrawer={this.openDrawer.bind(this)}
+              title={'Products'}
+              left={true}
+              right={true}
             />
-            <Text
-              style={
-                this.state.loading
-                  ? { textAlign: 'center' }
-                  : { display: 'none' }
-              }
-            >
-              Loading Products...
-            </Text>
-            <List>
-              {this.props.products.map((e, i) => {
-                return (
-                  <ListItem>
-                    <Thumbnail
-                      square
-                      size={80}
-                      source={{ uri: e.images[0].src }}
-                    />
-                    <Body>
-                      <Text>{e.name}</Text>
-                      <Text note>
-                        Stock : {!e.stock_quantity ? 0 : e.stock_quantity}
-                      </Text>
-                    </Body>
-                  </ListItem>
-                );
-              })}
-            </List>
-          </Content>
-          <FooterComp />
-        </Container>
+
+            <ProductListComp  navigation={this.props.navigation} />
+
+            <FooterComp />
+          </Container>
         </Drawer>
       </Root>
     );
   }
 }
+
+

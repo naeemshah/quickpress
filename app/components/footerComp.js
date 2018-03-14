@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { Footer, FooterTab, Text, Button } from 'native-base';
 import { connect } from 'react-redux';
 
-
 @connect(store => {
   return {
     authenticated: store.storeData.authenticated,
@@ -15,10 +14,7 @@ export class FooterComp extends Component<Props> {
     super(props);
   }
 
-  navigate (){
-   
-    
-  }
+  navigate() {}
 
   logout() {
     AsyncStorage.removeItem('StoreKeys').then(() => {
@@ -39,7 +35,11 @@ export class FooterComp extends Component<Props> {
           </Button>
 
           <Button>
-            <Icon name="money" onPress={() => this.navigate()} style={{ fontSize: 20 }} />
+            <Icon
+              name="money"
+              onPress={() => this.navigate()}
+              style={{ fontSize: 20 }}
+            />
           </Button>
           <Button>
             <Icon name="person" style={{ fontSize: 20 }} />

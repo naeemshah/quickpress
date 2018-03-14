@@ -15,16 +15,14 @@ import {
 } from 'native-base';
 import { connect } from 'react-redux';
 import { getProducts } from '../.././actions/productsAction';
-import {ProductComp} from "./ProductComp";
+import { ProductComp } from './ProductComp';
 
 import {
   StackNavigator,
   Navigator,
   NavigationActions,
-  addNavigationHelpers
+  addNavigationHelpers,
 } from 'react-navigation';
-
-
 
 @connect(store => {
   return {
@@ -39,7 +37,7 @@ import {
 export class ProductListComp extends Component<Props> {
   constructor(props) {
     super(props);
-    this._onForward = this._onForward.bind(this);
+    //  this._onForward = this._onForward.bind(this);
   }
 
   componentDidMount() {
@@ -53,17 +51,17 @@ export class ProductListComp extends Component<Props> {
     //this.refs.Product_listing.scrollToEnd({animated: true});
   }
 
-
-  _onForward() {
-  
-  
+  _onForward(productID) {
+    this.props.dispatch({
+      type: 'SET_CURRENT_PROD',
+      payload: { id: productID },
+    });
     const navigateToScreen2 = NavigationActions.navigate({
-        routeName: "ProductDetail",
-        params: { name: "Shubhnik" }
-      });
-      this.props.navigation.dispatch(navigateToScreen2);
- 
-}
+      routeName: 'ProductDetail',
+      params: { name: 'Shubhnik' },
+    });
+    this.props.navigation.dispatch(navigateToScreen2);
+  }
 
   getProducts() {
     if (this.props.authenticated)
@@ -94,7 +92,7 @@ export class ProductListComp extends Component<Props> {
         <List>
           {this.props.products.map((e, i) => {
             return (
-              <ListItem onPress={this._onForward} >
+              <ListItem onPress={this._onForward.bind(this, e.id)} id={e.id}>
                 <Thumbnail square size={80} source={{ uri: e.images[0].src }} />
                 <Body>
                   <Text>{e.name}</Text>

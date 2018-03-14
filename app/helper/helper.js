@@ -1,1 +1,1 @@
-export const serverURL = 'http://192.168.10.100/wooAPI/';
+export const serverURL = 'http://192.168.43.102/wooAPI/';

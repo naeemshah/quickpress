@@ -37,23 +37,19 @@ import { ProductListComp } from './Products/productListComp';
     APIKey: store.storeData.APIKey,
     APISecret: store.storeData.APISecret,
     authenticated: store.storeData.authenticated,
-    
   };
 })
 export class HomeComp extends Component<Props> {
-
   static navigationOptions = {
-    title: "Screen1",
+    title: 'Screen1',
     gesturesEnabled: false,
     headerLeft: null,
-    header: null
+    header: null,
   };
-
 
   constructor(props) {
     super(props);
 
-    
     this.state = {
       isRefreshing: false,
       loading: true,
@@ -138,7 +134,7 @@ export class HomeComp extends Component<Props> {
               right={true}
             />
 
-            <ProductListComp  navigation={this.props.navigation} />
+            <ProductListComp navigation={this.props.navigation} />
 
             <FooterComp />
           </Container>
@@ -147,5 +143,3 @@ export class HomeComp extends Component<Props> {
     );
   }
 }
-
-

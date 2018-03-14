@@ -2,6 +2,7 @@ export default (product = (
   state = {
     products: [],
     loading: false,
+    currentProduct: {},
   },
   action
 ) => {
@@ -17,6 +18,24 @@ export default (product = (
       stateN.loading = true;
       return { ...stateN };
     }
+    case 'SET_CURRENT_PROD': {
+      let stateN = JSON.parse(JSON.stringify(state));
+      let currentProduct = {};
+      stateN.products.map((e, i) => {
+        if (e.id === action.payload.id) {
+          currentProduct = e;
+        }
+      });
+      return { ...stateN, currentProduct: currentProduct };
+    }
+
+    case 'SET_PRODUCT_IMAGE': {
+      let stateN = JSON.parse(JSON.stringify(state));
+      stateN.currentProduct.images[action.payload.index].src =
+        action.payload.src;
+      return { ...stateN };
+    }
+
     default:
       return state;
   }

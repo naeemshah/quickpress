@@ -8,6 +8,8 @@ import { Button, Text, View } from 'react-native';
 import { HomeComp } from '.././components/homeComp';
 import { ProductComp } from '.././components/Products/ProductComp';
 import { ModalComp } from '.././components/modal';
+import { DashboardComp } from '.././components/dashboard/dashbaord';
+import { BarcodeApp } from '.././components/barcodeReader';
 
 import {
   StackNavigator,
@@ -20,6 +22,8 @@ const App2 = StackNavigator({
   Home: { screen: HomeComp },
   ProductDetail: { screen: ProductComp, mode: 'modal' },
   Modal: { screen: ModalComp },
+  Dashboard:{ screen: DashboardComp },
+  BarCode:{ screen: BarcodeApp }
 });
 
 @connect(store => {

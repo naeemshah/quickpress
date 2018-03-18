@@ -4,6 +4,13 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { Footer, FooterTab, Text, Button } from 'native-base';
 import { connect } from 'react-redux';
 
+import {
+  StackNavigator,
+  Navigator,
+  NavigationActions,
+  addNavigationHelpers,
+} from 'react-navigation';
+
 @connect(store => {
   return {
     authenticated: store.storeData.authenticated,
@@ -14,7 +21,16 @@ export class FooterComp extends Component<Props> {
     super(props);
   }
 
-  navigate() {}
+  navigate() {
+
+    const navigateToScreen2 = NavigationActions.navigate({
+      routeName: 'Dashboard',
+      params: { name: 'Shubhnik' },
+    });
+    this.props.navigation.dispatch(navigateToScreen2);
+
+
+  }
 
   logout() {
     AsyncStorage.removeItem('StoreKeys').then(() => {

@@ -16,10 +16,10 @@ export function getProducts(url, key, secret) {
     //     });
     //   });
 
-    // dispatch({
-    //   type: 'LOADING_PRODUCT',
-    //   payload: {},
-    // });
+    dispatch({
+      type: 'LOADING_PRODUCT',
+      payload: {},
+    });
 
     let requestData = {
       endpoint: 'products',

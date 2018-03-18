@@ -51,11 +51,11 @@ export class ProductComp extends Component<Props> {
   componentDidMount() {}
 
   showModal() {
-    alert('fdsfd');
-    const navigateToScreen2 = NavigationActions.navigate({
-      routeName: 'Modal',
-    });
-    this.props.navigation.dispatch(navigateToScreen2);
+    // alert('fdsfd');
+    // const navigateToScreen2 = NavigationActions.navigate({
+    //   routeName: 'Modal',
+    // });
+    // this.props.navigation.dispatch(navigateToScreen2);
   }
 
   addImage(imageIndex) {
@@ -85,16 +85,20 @@ export class ProductComp extends Component<Props> {
     return (
       <Container>
         <Content>
+        <Text style={{textAlign:"center",fontStyle:"italic"}}>{this.props.currentProduct.name}</Text>
           <Card style={{ flex: 0 }}>
+          <Text style={{textAlign:"center",fontStyle:"italic"}}>Product Images</Text>
             <CardItem>
+            
               {this.props.currentProduct.images.map((e, i) => {
                 return (
-                  <Item onPress={this.addImage.bind(this, i)}>
-                    <Thumbnail source={{ uri: e.src }} />
+                  <Item onPress={this.addImage.bind(this, i)} style={{borderColor:"Green",borderSize:3}}>
+                    <Thumbnail square large source={{ uri: e.src }} />
                   </Item>
                 );
               })}
             </CardItem>
+            
           </Card>
 
           <Form>

@@ -26,6 +26,7 @@ import { SidebarComp } from './sidebarComp';
 import { BlockLoader } from './block_loader';
 import { HeaderComp } from './headerComp';
 import { ProductListComp } from './Products/productListComp';
+import {NavigationActions} from 'react-navigation';
 
 @connect(store => {
   return {
@@ -86,7 +87,8 @@ export class HomeComp extends Component<Props> {
   }
 
   showBC() {
-    this.props.dispatch({ type: 'BARCODE_STATUS', payload: true });
+   // this.props.dispatch({ type: 'BARCODE_STATUS', payload: true });
+   
   }
 
   scrolled() {}
@@ -101,18 +103,18 @@ export class HomeComp extends Component<Props> {
       return <BlockLoader />;
     }
 
-    if (this.props.showBarCodeScanner) {
-      return (
-        <Container>
-          <BarcodeApp />
-        </Container>
-      );
-    }
+    // if (this.props.showBarCodeScanner) {
+    //   return (
+    //     <Container>
+    //       <BarcodeApp />
+    //     </Container>
+    //   );
+    // }
 
     if (!this.props.authenticated) {
       return (
         <Root>
-          <StoreConnectComp />
+          <StoreConnectComp navigation={this.props.navigation} />
         </Root>
       );
     }
@@ -136,7 +138,7 @@ export class HomeComp extends Component<Props> {
 
             <ProductListComp navigation={this.props.navigation} />
 
-            <FooterComp />
+            <FooterComp navigation={this.props.navigation}  />
           </Container>
         </Drawer>
       </Root>

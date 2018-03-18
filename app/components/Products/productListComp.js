@@ -29,6 +29,7 @@ import {
     authenticated: store.storeData.authenticated,
     products: store.product.products,
     loading: store.product.loading,
+    refreshing: store.product.refreshing,
     storeUrl: store.storeData.storeUrl,
     APIKey: store.storeData.APIKey,
     APISecret: store.storeData.APISecret,
@@ -37,6 +38,7 @@ import {
 export class ProductListComp extends Component<Props> {
   constructor(props) {
     super(props);
+  
     //  this._onForward = this._onForward.bind(this);
   }
 
@@ -74,9 +76,17 @@ export class ProductListComp extends Component<Props> {
       );
   }
 
+
+  updateContent() {
+    getProducts();
+}
+
   render() {
     return (
-      <Content>
+      <Content refreshControl={<RefreshControl
+        refreshing={this.props.loading}
+        onRefresh={()=>{this.updateContent()}}/>
+    }>
         <Spinner
           color="green"
           style={this.props.loading ? {} : { display: 'none' }}

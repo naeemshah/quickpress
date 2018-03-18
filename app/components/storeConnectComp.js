@@ -26,6 +26,10 @@ import { HeaderComp } from './headerComp';
 
 import { Authentication } from '.././actions/storeConnectActions';
 
+import {
+  NavigationActions} from 'react-navigation';
+
+
 @connect(store => {
   return {
     showBarCodeScanner: store.storeData.showBarCodeScanner,
@@ -85,7 +89,13 @@ export class StoreConnectComp extends Component<Props> {
   }
 
   showBC() {
-    this.props.dispatch({ type: 'BARCODE_STATUS', payload: true });
+    //this.props.dispatch({ type: 'BARCODE_STATUS', payload: true });
+    const navigateToScreen2 = NavigationActions.navigate({
+      routeName: 'BarCode',
+      params: { name: 'Shubhnik' },
+    });
+    this.props.navigation.dispatch(navigateToScreen2); 
+  
   }
 
   render() {

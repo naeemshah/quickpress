@@ -3,6 +3,7 @@ export default (product = (
     products: [],
     loading: false,
     currentProduct: {},
+    refreshing:false
   },
   action
 ) => {
@@ -10,12 +11,18 @@ export default (product = (
     case 'GET_PRODUCT': {
       let stateN = JSON.parse(JSON.stringify(state));
       stateN.loading = false;
+      stateN.refreshing = false;
       stateN.products = action.payload.products;
       return { ...stateN };
     }
     case 'LOADING_PRODUCT': {
       let stateN = JSON.parse(JSON.stringify(state));
       stateN.loading = true;
+      return { ...stateN };
+    }
+    case 'Refreshing_PRODUCT': {
+      let stateN = JSON.parse(JSON.stringify(state));
+      stateN.refreshing = true;
       return { ...stateN };
     }
     case 'SET_CURRENT_PROD': {

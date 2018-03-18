@@ -3,7 +3,7 @@ export default (product = (
     products: [],
     loading: false,
     currentProduct: {},
-    refreshing:false
+    refreshing: false,
   },
   action
 ) => {

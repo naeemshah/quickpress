@@ -26,9 +26,7 @@ import { HeaderComp } from './headerComp';
 
 import { Authentication } from '.././actions/storeConnectActions';
 
-import {
-  NavigationActions} from 'react-navigation';
-
+import { NavigationActions } from 'react-navigation';
 
 @connect(store => {
   return {
@@ -94,8 +92,7 @@ export class StoreConnectComp extends Component<Props> {
       routeName: 'BarCode',
       params: { name: 'Shubhnik' },
     });
-    this.props.navigation.dispatch(navigateToScreen2); 
-  
+    this.props.navigation.dispatch(navigateToScreen2);
   }
 
   render() {

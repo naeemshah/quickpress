@@ -22,14 +22,11 @@ export class FooterComp extends Component<Props> {
   }
 
   navigate() {
-
     const navigateToScreen2 = NavigationActions.navigate({
       routeName: 'Dashboard',
       params: { name: 'Shubhnik' },
     });
     this.props.navigation.dispatch(navigateToScreen2);
-
-
   }
 
   logout() {

@@ -22,8 +22,8 @@ const App2 = StackNavigator({
   Home: { screen: HomeComp },
   ProductDetail: { screen: ProductComp, mode: 'modal' },
   Modal: { screen: ModalComp },
-  Dashboard:{ screen: DashboardComp },
-  BarCode:{ screen: BarcodeApp }
+  Dashboard: { screen: DashboardComp },
+  BarCode: { screen: BarcodeApp },
 });
 
 @connect(store => {

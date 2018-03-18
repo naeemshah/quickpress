@@ -38,7 +38,7 @@ import {
 export class ProductListComp extends Component<Props> {
   constructor(props) {
     super(props);
-  
+
     //  this._onForward = this._onForward.bind(this);
   }
 
@@ -76,17 +76,22 @@ export class ProductListComp extends Component<Props> {
       );
   }
 
-
   updateContent() {
     getProducts();
-}
+  }
 
   render() {
     return (
-      <Content refreshControl={<RefreshControl
-        refreshing={this.props.loading}
-        onRefresh={()=>{this.updateContent()}}/>
-    }>
+      <Content
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.loading}
+            onRefresh={() => {
+              this.updateContent();
+            }}
+          />
+        }
+      >
         <Spinner
           color="green"
           style={this.props.loading ? {} : { display: 'none' }}

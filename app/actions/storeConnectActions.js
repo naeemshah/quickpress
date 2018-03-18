@@ -16,7 +16,7 @@ export function Authentication(url, key, secret) {
       secret: secret,
       store_url: url,
     };
-   
+
     axios
       .post(serverURL, JSON.stringify(requestData))
       .then(function(response) {

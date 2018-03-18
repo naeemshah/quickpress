@@ -28,11 +28,9 @@ let listener = null;
   };
 })
 export class BarcodeApp extends Component {
-
   static navigationOptions = {
-    title: 'Barcode Reader'
+    title: 'Barcode Reader',
   };
-
 
   backButtonPressFunction() {
     this.props.dispatch({ type: 'BARCODE_STATUS', payload: false });
@@ -58,11 +56,11 @@ export class BarcodeApp extends Component {
     return (
       <View style={{ flex: 1 }}>
         <BarcodeScanner
-          style={{ flex:1}}
+          style={{ flex: 1 }}
           onBarcodeRead={({ data, type }) => {
             this.props.dispatch({ type: 'SET_BARCODE', payload: data });
 
-            const {goBack} = this.props.navigation; 
+            const { goBack } = this.props.navigation;
             goBack();
 
             //Alert.alert(`Barcode '${data}' of type '${type}' was scanned.`);
@@ -88,8 +86,6 @@ export class BarcodeApp extends Component {
             BarcodeType.EAN_8 /* replace with ALL for all alternatives */
           }
         />
-
-       
       </View>
     );
   }

@@ -85,20 +85,25 @@ export class ProductComp extends Component<Props> {
     return (
       <Container>
         <Content>
-        <Text style={{textAlign:"center",fontStyle:"italic"}}>{this.props.currentProduct.name}</Text>
+          <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>
+            {this.props.currentProduct.name}
+          </Text>
           <Card style={{ flex: 0 }}>
-          <Text style={{textAlign:"center",fontStyle:"italic"}}>Product Images</Text>
+            <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>
+              Product Images
+            </Text>
             <CardItem>
-            
               {this.props.currentProduct.images.map((e, i) => {
                 return (
-                  <Item onPress={this.addImage.bind(this, i)} style={{borderColor:"Green",borderSize:3}}>
+                  <Item
+                    onPress={this.addImage.bind(this, i)}
+                    style={{ borderColor: 'Green', borderSize: 3 }}
+                  >
                     <Thumbnail square large source={{ uri: e.src }} />
                   </Item>
                 );
               })}
             </CardItem>
-            
           </Card>
 
           <Form>

@@ -27,6 +27,7 @@ import { BlockLoader } from './block_loader';
 import { HeaderComp } from './headerComp';
 import { ProductListComp } from './Products/productListComp';
 import { NavigationActions } from 'react-navigation';
+import { ModalComp } from './modal';
 
 @connect(store => {
   return {
@@ -55,6 +56,7 @@ export class HomeComp extends Component<Props> {
       isRefreshing: false,
       loading: true,
       showBlockLoader: true,
+      mv: false,
     };
   }
 
@@ -84,6 +86,14 @@ export class HomeComp extends Component<Props> {
       this.setState({ loading: this.props.loading ? true : false });
 
     //this.refs.Product_listing.scrollToEnd({animated: true});
+  }
+
+  closeModal() {
+    this.setState({ mv: !this.state.mv });
+  }
+
+  showModal() {
+    this.setState({ mv: true });
   }
 
   showBC() {

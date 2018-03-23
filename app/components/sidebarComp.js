@@ -12,13 +12,17 @@ import {
   List,
   ListItem,
   Text,
-  Icon,
   Left,
   Body,
   Right,
   Thumbnail,
   Container,
 } from 'native-base';
+
+import { Styles } from '.././styles/main';
+
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import Icon2 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 import { connect } from 'react-redux';
 
@@ -39,7 +43,7 @@ export class SidebarComp extends Component {
   render() {
     return (
       <Container>
-        <Content style={{ backgroundColor: 'white' }}>
+        <Content style={{ backgroundColor: '#f17d00' }}>
           <ImageBackground
             source={{
               uri:
@@ -50,26 +54,41 @@ export class SidebarComp extends Component {
               alignSelf: 'stretch',
               justifyContent: 'center',
               alignItems: 'center',
+              backgroundColor: '#ccc',
             }}
           >
             <Image
               square
-              style={{ height: 80, width: 70 }}
-              source={{
-                uri: 'https://nativebase.io/assets/img/front-page-icon.png',
-              }}
+              style={{ height: 200, width: 200 }}
+              source={require('.././images/logo.png')}
             />
           </ImageBackground>
 
           <List>
-            <ListItem button>
-              <Text>Simon Mignolet</Text>
+            <ListItem style={Styles.sidebarItem}>
+              <Icon name="tachometer" size={20} style={Styles.sidebarIcons} />
+              <Text style={Styles.sidebarText}>Dashboard</Text>
             </ListItem>
-            <ListItem button>
-              <Text>Nathaniel Clyne</Text>
+            <ListItem style={Styles.sidebarItem}>
+              <Icon2 name="layers" size={20} style={Styles.sidebarIcons} />
+              <Text style={Styles.sidebarText}>Products</Text>
             </ListItem>
-            <ListItem button onPress={this.logout.bind(this)}>
-              <Text>Logout</Text>
+            <ListItem style={Styles.sidebarItem}>
+              <Icon2 name="finance" size={20} style={Styles.sidebarIcons} />
+              <Text style={Styles.sidebarText}>Orders</Text>
+            </ListItem>
+
+            <ListItem style={Styles.sidebarItem}>
+              <Icon name="cog" size={20} style={Styles.sidebarIcons} />
+              <Text style={Styles.sidebarText}>Setting</Text>
+            </ListItem>
+
+            <ListItem
+              style={Styles.sidebarItem}
+              onPress={this.logout.bind(this)}
+            >
+              <Icon2 name="logout" size={20} style={Styles.sidebarIcons} />
+              <Text style={Styles.sidebarText}>Logout</Text>
             </ListItem>
           </List>
         </Content>

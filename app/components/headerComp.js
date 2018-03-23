@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { RefreshControl, Keyboard } from 'react-native';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {
   Spinner,
   Header,
@@ -7,17 +8,18 @@ import {
   Left,
   Right,
   Title,
-  Icon,
   Button,
   Item,
   Input,
   Text,
 } from 'native-base';
 
+import { Styles } from '.././styles/main';
+
 export class HeaderComp extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { search: false };
+    this.state = { search: false, mv: false };
   }
 
   componentWillMount() {
@@ -44,7 +46,7 @@ export class HeaderComp extends Component<Props> {
       this.props.left && !this.state.search ? (
         <Left>
           <Button transparent onPress={() => this.props.openDrawer()}>
-            <Icon name="menu" />
+            <Icon name="bars" style={Styles.sidebarIcons} size={20} />
           </Button>
         </Left>
       ) : null;
@@ -56,7 +58,11 @@ export class HeaderComp extends Component<Props> {
             transparent
             onPress={() => this.setState({ search: !this.state.search })}
           >
-            <Icon name="search" />
+            <Icon name="search" size={20} style={Styles.sidebarIcons} />
+          </Button>
+
+          <Button transparent>
+            <Icon name="filter" size={20} style={Styles.sidebarIcons} />
           </Button>
         </Right>
       ) : null;
@@ -70,7 +76,8 @@ export class HeaderComp extends Component<Props> {
     let searchBox = this.state.search ? (
       <Item>
         <Icon
-          name="ios-search"
+          name="arrow-left"
+          size={20}
           onPress={() => this.setState({ search: !this.state.search })}
         />
         <Input placeholder="Search" />
@@ -78,7 +85,7 @@ export class HeaderComp extends Component<Props> {
       </Item>
     ) : null;
     return (
-      <Header searchBar={true}>
+      <Header searchBar={true} style={{ backgroundColor: '#f17d00' }}>
         {searchBox}
         {left}
         {body}

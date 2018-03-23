@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { RefreshControl, Alert, AsyncStorage } from 'react-native';
+import {
+  RefreshControl,
+  Dimensions,
+  Alert,
+  AsyncStorage,
+  ImageBackground,
+  StyleSheet,
+} from 'react-native';
 import {
   Spinner,
   Grid,
@@ -96,61 +103,76 @@ export class StoreConnectComp extends Component<Props> {
   }
 
   render() {
+    let { height, width } = Dimensions.get('window');
     return (
       <Container>
         <HeaderComp title={'Connect To Your Store'} left={false} righ={false} />
         <Content>
-          <Item
-            floatingLabel
-            style={{ marginTop: 100, borderColor: this.state.urlE }}
+          <ImageBackground
+            style={[styles.backgroundImage, { height: height, width: width }]}
+            source={require('.././images/2.jpg')}
           >
-            <Label>Wordpress Store Link</Label>
-            <Input
-              value={this.state.url}
-              onChangeText={url => this.setState({ url })}
-            />
-          </Item>
+            <Item
+              floatingLabel
+              style={{ marginTop: 100, borderColor: this.state.urlE }}
+            >
+              <Label>Wordpress Store Link</Label>
+              <Input
+                value={this.state.url}
+                onChangeText={url => this.setState({ url })}
+              />
+            </Item>
 
-          <Item
-            floatingLabel
-            style={{ marginTop: 10, borderColor: this.state.keyE }}
-          >
-            <Label>Woo Consumer key</Label>
-            <Input
-              value={this.state.key}
-              onChangeText={key => this.setState({ key })}
-            />
-          </Item>
-          <Item
-            floatingLabel
-            style={{ marginTop: 10, borderColor: this.state.secretE }}
-          >
-            <Label>Woo Consumer secret</Label>
-            <Input
-              value={this.state.secret}
-              onChangeText={secret => this.setState({ secret })}
-            />
-          </Item>
+            <Item
+              floatingLabel
+              style={{ marginTop: 10, borderColor: this.state.keyE }}
+            >
+              <Label>Woo Consumer key</Label>
+              <Input
+                value={this.state.key}
+                onChangeText={key => this.setState({ key })}
+              />
+            </Item>
+            <Item
+              floatingLabel
+              style={{ marginTop: 10, borderColor: this.state.secretE }}
+            >
+              <Label>Woo Consumer secret</Label>
+              <Input
+                value={this.state.secret}
+                onChangeText={secret => this.setState({ secret })}
+              />
+            </Item>
 
-          <Grid style={{ height: 50, marginTop: 25 }}>
-            <Col style={{ marginLeft: 10 }}>
-              <Button
-                onPress={this.connectToStore.bind(this)}
-                success
-                disabled={this.props.connectBtn}
-              >
-                <Text>{this.props.connectBtnText}</Text>
-              </Button>
-            </Col>
+            <Grid style={{ height: 50, marginTop: 25 }}>
+              <Col style={{ marginLeft: 10 }}>
+                <Button
+                  onPress={this.connectToStore.bind(this)}
+                  success
+                  disabled={this.props.connectBtn}
+                >
+                  <Text>{this.props.connectBtnText}</Text>
+                </Button>
+              </Col>
 
-            <Col style={{ marginRight: 10 }}>
-              <Button block onPress={this.showBC.bind(this)}>
-                <Text>Barcode Scan</Text>
-              </Button>
-            </Col>
-          </Grid>
+              <Col style={{ marginRight: 10 }}>
+                <Button block onPress={this.showBC.bind(this)}>
+                  <Text>Barcode Scan</Text>
+                </Button>
+              </Col>
+            </Grid>
+          </ImageBackground>
         </Content>
       </Container>
     );
   }
 }
+
+let styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

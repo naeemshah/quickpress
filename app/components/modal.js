@@ -24,11 +24,12 @@ export class ModalComp extends Component<Props> {
       <Modal
         animationType="slide"
         transparent={false}
+        visible={this.props.mv}
         onRequestClose={() => {
           alert('Modal has been closed.');
         }}
       >
-        <Text>dfdsfsdf</Text>
+        <Button onPress={this.props.closeModal()} />
       </Modal>
     );
   }

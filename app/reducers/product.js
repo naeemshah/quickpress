@@ -4,6 +4,9 @@ export default (product = (
     loading: false,
     currentProduct: {},
     refreshing: false,
+    currentProductPage: 1,
+    productPerPage: 10,
+    lastPageReached: false,
   },
   action
 ) => {
@@ -12,7 +15,10 @@ export default (product = (
       let stateN = JSON.parse(JSON.stringify(state));
       stateN.loading = false;
       stateN.refreshing = false;
-      stateN.products = action.payload.products;
+      stateN.products.push.apply(stateN.products, action.payload.products);
+      stateN.lastPageReached =
+        action.payload.products.length == 0 ? true : false;
+      stateN.currentProductPage++;
       return { ...stateN };
     }
     case 'LOADING_PRODUCT': {

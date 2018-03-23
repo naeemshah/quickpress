@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RefreshControl, AsyncStorage } from 'react-native';
+import { RefreshControl, AsyncStorage, View } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {
   Footer,
@@ -12,10 +12,12 @@ import {
   List,
   ListItem,
   Thumbnail,
+  Fab,
 } from 'native-base';
 import { connect } from 'react-redux';
 import { getProducts } from '../.././actions/productsAction';
 import { ProductComp } from './ProductComp';
+import { InfiniteScroll } from '.././infiniteScrollComp';
 
 import {
   StackNavigator,
@@ -33,6 +35,7 @@ import {
     storeUrl: store.storeData.storeUrl,
     APIKey: store.storeData.APIKey,
     APISecret: store.storeData.APISecret,
+    lastPageReached: store.product.lastPageReached,
   };
 })
 export class ProductListComp extends Component<Props> {
@@ -66,7 +69,11 @@ export class ProductListComp extends Component<Props> {
   }
 
   getProducts() {
-    if (this.props.authenticated)
+    if (
+      this.props.authenticated &&
+      !this.props.lastPageReached &&
+      !this.props.loading
+    )
       this.props.dispatch(
         getProducts(
           this.props.storeUrl,
@@ -82,44 +89,59 @@ export class ProductListComp extends Component<Props> {
 
   render() {
     return (
-      <Content
-        refreshControl={
-          <RefreshControl
-            refreshing={this.props.loading}
-            onRefresh={() => {
-              this.updateContent();
-            }}
-          />
-        }
-      >
-        <Spinner
-          color="green"
-          style={this.props.loading ? {} : { display: 'none' }}
-        />
-        <Text
-          style={
-            this.props.loading ? { textAlign: 'center' } : { display: 'none' }
+      <View style={{ flex: 1 }}>
+        <Fab style={{ backgroundColor: '#f17d00' }} position="bottomRight">
+          <Icon name="plus" />
+        </Fab>
+        <InfiniteScroll
+          onLoadMoreAsync={this.getProducts.bind(this)}
+          distanceFromEnd={10}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.loading}
+              onRefresh={() => {
+                this.updateContent();
+              }}
+            />
           }
         >
-          Loading Products...
-        </Text>
+          <Spinner
+            color="green"
+            style={this.props.loading ? {} : { display: 'none' }}
+          />
+          <Text
+            style={
+              this.props.loading ? { textAlign: 'center' } : { display: 'none' }
+            }
+          >
+            Loading Products...
+          </Text>
 
-        <List>
-          {this.props.products.map((e, i) => {
-            return (
-              <ListItem onPress={this._onForward.bind(this, e.id)} id={e.id}>
-                <Thumbnail square size={80} source={{ uri: e.images[0].src }} />
-                <Body>
-                  <Text>{e.name}</Text>
-                  <Text note>
-                    Stock : {!e.stock_quantity ? 0 : e.stock_quantity}
-                  </Text>
-                </Body>
-              </ListItem>
-            );
-          })}
-        </List>
-      </Content>
+          <List style={{ backgroundColor: 'white' }}>
+            {this.props.products.map((e, i) => {
+              return (
+                <ListItem>
+                  <Thumbnail
+                    square
+                    size={80}
+                    source={{ uri: e.images[0].src }}
+                  />
+                  <Body>
+                    <Text>{e.name}</Text>
+                    <Button
+                      transparent
+                      onPress={this._onForward.bind(this, e.id)}
+                      id={e.id}
+                    >
+                      <Text style={{ marginLeft: -3 }}>Edit</Text>
+                    </Button>
+                  </Body>
+                </ListItem>
+              );
+            })}
+          </List>
+        </InfiniteScroll>
+      </View>
     );
   }
 }

@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { Footer, FooterTab, Text, Button } from 'native-base';
 import { connect } from 'react-redux';
 
-import {Styles} from ".././styles/main"
+import { Styles } from '.././styles/main';
 
 import {
   StackNavigator,
@@ -44,11 +44,10 @@ export class FooterComp extends Component<Props> {
 
   render() {
     return (
-      <Footer >
+      <Footer>
         <FooterTab style={Styles.primaryBgColor}>
           <Button vertical>
-            <Icon name="barcode"  size={20}
-              style={Styles.headerIcons} />
+            <Icon name="barcode" size={20} style={Styles.headerIcons} />
             <Text style={Styles.primaryColor}>Products</Text>
           </Button>
 
@@ -61,13 +60,11 @@ export class FooterComp extends Component<Props> {
             />
           </Button>
           <Button>
-            <Icon name="user" size={20}
-              style={Styles.headerIcons} />
+            <Icon name="user" size={20} style={Styles.headerIcons} />
           </Button>
 
           <Button>
-            <Icon name="cog" size={20}
-              style={Styles.headerIcons} />
+            <Icon name="cog" size={20} style={Styles.headerIcons} />
           </Button>
         </FooterTab>
       </Footer>

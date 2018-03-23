@@ -51,8 +51,8 @@ export class StoreConnectComp extends Component<Props> {
     super(props);
     this.state = {
       url: 'http://34.216.246.14/wordpress/',
-      key: 'ck_3c10d383ee830a98b36a6084b83e2a25d6cfb3d1',
-      secret: 'cs_d0fe5df2a4dba8791bf2c9a3299e6dccea3ca19a',
+      key: 'ck_bdd863166f376052ee097bfc7dd089a30924c37f',
+      secret: 'cs_796dd3044d5705b70621f92ae2b26aab2da4954f',
       urlE: '#cccccc',
       keyE: '#cccccc',
       secretE: '#cccccc',

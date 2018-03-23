@@ -56,10 +56,8 @@ export class OrderListComp extends Component<Props> {
     //this.refs.Product_listing.scrollToEnd({animated: true});
   }
 
-  
-
   getOrders(refresh) {
-    let first = (refresh !== undefined) ? refresh : false;
+    let first = refresh !== undefined ? refresh : false;
     if (
       this.props.authenticated &&
       !this.props.lastPageReached &&
@@ -71,7 +69,6 @@ export class OrderListComp extends Component<Props> {
           this.props.APIKey,
           this.props.APISecret,
           first
-
         )
       );
   }
@@ -87,7 +84,7 @@ export class OrderListComp extends Component<Props> {
           <Icon name="plus" />
         </Fab>
         <InfiniteScroll
-          onLoadMoreAsync={this.getProducts.bind(this,true)}
+          onLoadMoreAsync={this.getProducts.bind(this, true)}
           distanceFromEnd={10}
           refreshControl={
             <RefreshControl

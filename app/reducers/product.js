@@ -49,6 +49,29 @@ export default (product = (
       return { ...stateN };
     }
 
+    case 'CHANGING_STOCK': {
+      let stateN = JSON.parse(JSON.stringify(state));
+      let { id, stock } = action.payload;
+      stateN.products.map((e, i) => {
+        if (e.id === id) {
+          stateN.products[i].changingStock = true;
+        }
+      });
+      return { ...stateN };
+    }
+
+    case 'STOCK_CHANGED': {
+      let stateN = JSON.parse(JSON.stringify(state));
+      let { id, stock } = action.payload;
+      stateN.products.map((e, i) => {
+        if (e.id === id) {
+          stateN.products[i].changingStock = false;
+          stateN.products[i].in_stock = stock;
+        }
+      });
+      return { ...stateN };
+    }
+
     default:
       return state;
   }

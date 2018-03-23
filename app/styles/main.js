@@ -14,10 +14,10 @@ export const Styles = StyleSheet.create({
   sidebarText: {
     color: 'white',
   },
-  primaryBgColor:{
-    backgroundColor: '#f17d00'
+  primaryBgColor: {
+    backgroundColor: '#f17d00',
   },
-  primaryColor:{
-    color:"white"
-  }
+  primaryColor: {
+    color: 'white',
+  },
 });

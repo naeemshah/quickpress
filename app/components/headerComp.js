@@ -46,7 +46,7 @@ export class HeaderComp extends Component<Props> {
       this.props.left && !this.state.search ? (
         <Left>
           <Button transparent onPress={() => this.props.openDrawer()}>
-            <Icon name="bars" style={Styles.sidebarIcons} size={20} />
+            <Icon name="bars" style={Styles.headerIcons} size={20} />
           </Button>
         </Left>
       ) : null;
@@ -58,11 +58,11 @@ export class HeaderComp extends Component<Props> {
             transparent
             onPress={() => this.setState({ search: !this.state.search })}
           >
-            <Icon name="search" size={20} style={Styles.sidebarIcons} />
+            <Icon name="search" size={20} style={Styles.headerIcons} />
           </Button>
 
           <Button transparent>
-            <Icon name="filter" size={20} style={Styles.sidebarIcons} />
+            <Icon name="filter" size={20} style={Styles.headerIcons} />
           </Button>
         </Right>
       ) : null;

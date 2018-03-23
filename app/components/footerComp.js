@@ -4,12 +4,16 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { Footer, FooterTab, Text, Button } from 'native-base';
 import { connect } from 'react-redux';
 
+import {Styles} from ".././styles/main"
+
 import {
   StackNavigator,
   Navigator,
   NavigationActions,
   addNavigationHelpers,
 } from 'react-navigation';
+
+import Icon2 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 @connect(store => {
   return {
@@ -40,26 +44,30 @@ export class FooterComp extends Component<Props> {
 
   render() {
     return (
-      <Footer>
-        <FooterTab>
-          <Button>
-            <Icon name="barcode" style={{ color: 'green' }} />
-            <Text>Products</Text>
+      <Footer >
+        <FooterTab style={Styles.primaryBgColor}>
+          <Button vertical>
+            <Icon name="barcode"  size={20}
+              style={Styles.headerIcons} />
+            <Text style={Styles.primaryColor}>Products</Text>
           </Button>
 
           <Button>
-            <Icon
-              name="money"
+            <Icon2
+              name="finance"
               onPress={() => this.navigate()}
-              style={{ fontSize: 20 }}
+              size={20}
+              style={Styles.headerIcons}
             />
           </Button>
           <Button>
-            <Icon name="person" style={{ fontSize: 20 }} />
+            <Icon name="user" size={20}
+              style={Styles.headerIcons} />
           </Button>
 
-          <Button onPress={() => this.logout()}>
-            <Icon name="sign-out" style={{ fontSize: 20 }} />
+          <Button>
+            <Icon name="cog" size={20}
+              style={Styles.headerIcons} />
           </Button>
         </FooterTab>
       </Footer>

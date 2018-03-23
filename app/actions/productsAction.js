@@ -1,7 +1,6 @@
-import axios from 'axios';
-import { serverURL } from '.././helper/helper';
+import { serverURL,wooCommerceEndpoint } from '.././helper/helper';
 
-export function getProducts(url, key, secret) {
+export function getProducts(url, key, secret,first) {
   return (dispatch, getState) => {
     const { currentProductPage, productPerPage } = getState().product;
 
@@ -15,10 +14,10 @@ export function getProducts(url, key, secret) {
       key: key,
       secret: secret,
       store_url: url,
-      args: { per_page: productPerPage, page: currentProductPage },
+      args: { per_page:productPerPage, page:  currentProductPage  },
     };
 
-    fetchProducts(requestData, function(response) {
+    wooCommerceEndpoint(requestData, function(response) {
       if (response.status === 200 && response.data.status === 'success') {
         console.log(response);
         dispatch({
@@ -28,19 +27,7 @@ export function getProducts(url, key, secret) {
       } else {
         alert('Error while featching products');
       }
-    });
+    },function(){});
   };
 }
 
-function fetchProducts(requestData, callback) {
-  axios
-    .post(serverURL, JSON.stringify(requestData))
-    .then(function(response) {
-      // alert(response.data);
-
-      callback(response);
-    })
-    .catch(function(error) {
-      alert('Error while featching products. Error: ' + error);
-    });
-}

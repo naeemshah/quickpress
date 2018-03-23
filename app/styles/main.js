@@ -9,10 +9,15 @@ export const Styles = StyleSheet.create({
     color: 'white',
   },
   headerIcons: {
-    marginRight: 25,
     color: 'white',
   },
   sidebarText: {
     color: 'white',
   },
+  primaryBgColor:{
+    backgroundColor: '#f17d00'
+  },
+  primaryColor:{
+    color:"white"
+  }
 });

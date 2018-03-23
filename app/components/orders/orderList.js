@@ -38,7 +38,7 @@ import {
     lastPageReached: store.product.lastPageReached,
   };
 })
-export class ProductListComp extends Component<Props> {
+export class OrderListComp extends Component<Props> {
   constructor(props) {
     super(props);
 
@@ -56,19 +56,9 @@ export class ProductListComp extends Component<Props> {
     //this.refs.Product_listing.scrollToEnd({animated: true});
   }
 
-  _onForward(productID) {
-    this.props.dispatch({
-      type: 'SET_CURRENT_PROD',
-      payload: { id: productID },
-    });
-    const navigateToScreen2 = NavigationActions.navigate({
-      routeName: 'ProductDetail',
-      params: { name: 'Shubhnik' },
-    });
-    this.props.navigation.dispatch(navigateToScreen2);
-  }
+  
 
-  getProducts(refresh) {
+  getOrders(refresh) {
     let first = (refresh !== undefined) ? refresh : false;
     if (
       this.props.authenticated &&

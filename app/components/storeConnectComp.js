@@ -34,6 +34,7 @@ import { HeaderComp } from './headerComp';
 import { Authentication } from '.././actions/storeConnectActions';
 
 import { NavigationActions } from 'react-navigation';
+import { Styles } from '.././styles/main';
 
 @connect(store => {
   return {

@@ -27,6 +27,10 @@ import {
   addNavigationHelpers,
 } from 'react-navigation';
 
+const Entities = require('html-entities').AllHtmlEntities;
+ 
+const entities = new Entities();
+
 @connect(store => {
   return {
     authenticated: store.storeData.authenticated,
@@ -37,6 +41,7 @@ import {
     APIKey: store.storeData.APIKey,
     APISecret: store.storeData.APISecret,
     lastPageReached: store.product.lastPageReached,
+    SData:store.storeData.SData
   };
 })
 export class ProductListComp extends Component<Props> {
@@ -94,11 +99,11 @@ export class ProductListComp extends Component<Props> {
 
   getProducts(refresh) {
     let first = refresh !== undefined ? refresh : false;
-    if (
-      this.props.authenticated &&
-      !this.props.lastPageReached &&
-      !this.props.loading
-    )
+    
+    if (!this.props.authenticated ||  this.props.loading || this.props.lastPageReached && !first)
+    return;
+
+
       this.props.dispatch(
         getProducts(
           this.props.storeUrl,
@@ -114,23 +119,28 @@ export class ProductListComp extends Component<Props> {
   }
 
   render() {
-    return (
+   // let currency = (this.props.SData.settings !== undefined) ? this.props.SData.settings.currency_symbol : "";
+   for(let i in this.props.SData){
+    currency = entities.decode(this.props.SData.settings.currency_symbol)  
+  }
+  // let currency =  this.props.SData.settings.currency;
+   return (
       <View style={{ flex: 1 }}>
         <Fab style={{ backgroundColor: '#f17d00' }} position="bottomRight">
           <Icon name="plus" />
         </Fab>
+       
         <InfiniteScroll
-          onLoadMoreAsync={this.getProducts.bind(this, true)}
+          onLoadMoreAsync={this.getProducts.bind(this)}
           distanceFromEnd={10}
           refreshControl={
             <RefreshControl
-              refreshing={this.props.loading}
-              onRefresh={() => {
-                this.updateContent();
-              }}
+              refreshing={this.props.refreshing}
+              onRefresh={this.getProducts.bind(this, true)}
             />
           }
         >
+       
           <Spinner
             color="green"
             style={this.props.loading ? {} : { display: 'none' }}
@@ -154,11 +164,13 @@ export class ProductListComp extends Component<Props> {
                   />
                   <Body>
                     <Text>{e.name}</Text>
+                    <Text >Price : { currency+e.regular_price}</Text>
                     <Button
                       transparent
                       onPress={this._onForward.bind(this, e.id)}
                       id={e.id}
                     >
+                    
                       <Text style={{ marginLeft: -3 }}>Edit</Text>
                     </Button>
                   </Body>

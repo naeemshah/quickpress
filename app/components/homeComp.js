@@ -77,8 +77,33 @@ export class HomeComp extends Component<Props> {
           },
         });
       }
+
+      AsyncStorage.getItem('StoreData2').then(value => {
+        if (value) {
+          let storeData = JSON.parse(value);
+  
+          this.props.dispatch({
+            type: 'SET_STORE_DATA',
+            payload:storeData
+          });
+        }
+        
+      });
+
+
+
       this.setState({ showBlockLoader: false });
+
+
+
     });
+
+
+   
+
+
+
+
   }
 
   componentDidUpdate() {

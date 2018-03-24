@@ -15,15 +15,27 @@ export default (product = (
       let stateN = JSON.parse(JSON.stringify(state));
       stateN.loading = false;
       stateN.refreshing = false;
+      if(action.payload.refresh){
+        stateN.products =  action.payload.products;
+        stateN.currentProductPage = 1;
+      }else{
       stateN.products.push.apply(stateN.products, action.payload.products);
+      stateN.currentProductPage++;
+      }
       stateN.lastPageReached =
         action.payload.products.length == 0 ? true : false;
-      stateN.currentProductPage++;
+      
       return { ...stateN };
     }
     case 'LOADING_PRODUCT': {
       let stateN = JSON.parse(JSON.stringify(state));
-      stateN.loading = true;
+      if(action.payload.refresh){
+        stateN.refreshing = true;
+        stateN.currentProductPage = 1;
+      }else{
+        stateN.loading = true;
+      }
+     
       return { ...stateN };
     }
     case 'Refreshing_PRODUCT': {

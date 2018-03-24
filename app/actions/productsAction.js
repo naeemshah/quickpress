@@ -2,21 +2,23 @@ import { serverURL, wooCommerceEndpoint } from '.././helper/helper';
 
 export function getProducts(url, key, secret, first) {
   return (dispatch, getState) => {
-    const { currentProductPage, productPerPage } = getState().product;
-    const { APIKey, APISecret, storeUrl } = getState().storeData;
+    
     dispatch({
       type: 'LOADING_PRODUCT',
-      payload: {},
+      payload: {refresh : first},
     });
 
-    //currentProductPage = (first) ? 1 : currentProductPage;
+    const { currentProductPage, productPerPage } = getState().product;
+    const { APIKey, APISecret, storeUrl } = getState().storeData;
+
+   let currentProductPageT = (first) ? 1 : currentProductPage;
 
     let requestData = {
       endpoint: 'products',
       key: APIKey,
       secret: APISecret,
       store_url: storeUrl,
-      args: { per_page: productPerPage, page: currentProductPage },
+      args: { per_page: productPerPage, page: currentProductPageT },
     };
 
     wooCommerceEndpoint(
@@ -26,7 +28,7 @@ export function getProducts(url, key, secret, first) {
           console.log(response);
           dispatch({
             type: 'GET_PRODUCT',
-            payload: { products: response.data.data },
+            payload: { products: response.data.data,refresh : first },
           });
         } else {
           alert('Error while featching products');

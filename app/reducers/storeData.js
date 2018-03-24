@@ -10,6 +10,7 @@ export default (storeData = function(
     connectBtnText: 'Connect To Store',
     StorageKey: '@quickpress',
     authenticated: false,
+    SData:{}
   },
   action
 ) {
@@ -33,6 +34,7 @@ export default (storeData = function(
         APIKey: action.payload.key,
         APISecret: action.payload.secret,
         authenticated: action.payload.auth,
+        SData:action.payload.data2
       };
     }
 
@@ -41,6 +43,13 @@ export default (storeData = function(
         ...state,
         connectBtn: action.payload.dis,
         connectBtnText: action.payload.text,
+      };
+    }
+
+    case 'SET_STORE_DATA': {
+      return {
+        ...state,
+        SData: JSON.parse(JSON.stringify(action.payload))
       };
     }
 

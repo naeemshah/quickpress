@@ -119,7 +119,7 @@ export class ProductListComp extends Component<Props> {
   }
 
   render() {
-   // let currency = (this.props.SData.settings !== undefined) ? this.props.SData.settings.currency_symbol : "";
+    let currency = (this.props.SData.settings !== undefined) ? this.props.SData.settings.currency_symbol : "";
    for(let i in this.props.SData){
     currency = entities.decode(this.props.SData.settings.currency_symbol)  
   }

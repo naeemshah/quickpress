@@ -21,6 +21,9 @@ import {
   Input,
   Container,
   Label,
+  Picker,
+  Segment,
+  radio
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -34,9 +37,9 @@ var ImagePicker = require('react-native-image-picker');
 })
 export class ProductComp extends Component<Props> {
   static navigationOptions = {
-    title: 'Product',
+    title: 'Update Product', 
     gesturesEnabled: false,
-    headerRight: null,
+    headerRight: null, 
   };
 
   constructor(props) {
@@ -106,23 +109,79 @@ export class ProductComp extends Component<Props> {
             </CardItem>
           </Card>
 
-          <Form>
-            <Item floatingLabel>
-              <Label>Name</Label>
-              <Input
-                placeholder="Product Name"
-                onChangeText={name => this.setState({ name })}
-                value={this.state.name}
-              />
-            </Item>
+<Form>
+  <Item floatingLabel>
+    <Label>Name</Label>
+      <Input placeholder="Product Name" onChangeText={name => this.setState({ name })} value={this.state.name} />
+  </Item>
 
-            <Item last>
-              <Input placeholder="Password" />
-            </Item>
+   <Picker    iosHeader="Select one"
+              mode="dropdown"
+              placeholder="Product Type"
+              selectedValue={this.state.selected1} >
+              <Item label="Simple" value="key0" />
+              <Item label="Grouped" value="key1" />
+              <Item label="External" value="key2" />
+             </Picker>
+
+  <Picker    iosHeader="Select one"
+              mode="dropdown"
+              placeholder="Status"
+              selectedValue={this.state.key2} >
+              <Item label="Publish" value="key0" />
+              <Item label="Pending" value="key1" />
+              <Item label="Draft" value="key2" />
+       </Picker>
+   <Item floatingLabel>
+    <Label>Short Discription</Label>
+      <Input placeholder=""  />
+  </Item> 
+  <Item floatingLabel>
+    <Label>Full Discription</Label>
+      <Input multiline placeholder=""   />
+  </Item>  
+   <Item floatingLabel>
+    <Label>Reguller Price</Label>
+      <Input  placeholder=""   />
+  </Item> 
+  <Item floatingLabel>
+    <Label>Sale Price</Label>
+      <Input  placeholder=""   />
+  </Item> 
+  <Item floatingLabel>
+    <Label>Weight</Label>
+      <Input  placeholder=""   />
+  </Item> 
+  <Item floatingLabel>
+    <Label>Data on sale from</Label>
+      <Input   type="date"   />
+  </Item>  
+  <Item floatingLabel>
+    <Label>Data on sale to</Label>
+      <Input   type="date"   />
+  </Item>     
+   
+      <Segment>
+              <Button first><Text>Purchsable On</Text></Button>
+              <Button last active><Text>Purchsable Off</Text></Button>
+      </Segment> 
+       <Segment>
+              <Button first><Text>Instock</Text></Button>
+              <Button last active><Text>Out of stock</Text></Button>
+      </Segment> 
+       <Segment>
+              <Button first><Text>Shipping On</Text></Button>
+              <Button last active><Text>Shipping Off</Text></Button>
+      </Segment>  
+  
+
+  <Item last>
+    <Input placeholder="Password" />
+  </Item>
 
             <Item last>
               <Button onPress={this.showModal.bind(this)}>
-                <Text>dfsdf</Text>
+                <Text>Update</Text>
               </Button>
             </Item>
           </Form>

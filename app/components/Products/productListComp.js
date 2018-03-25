@@ -118,12 +118,12 @@ export class ProductListComp extends Component<Props> {
     getProducts();
   }
 
-  render() {
-    let currency = (this.props.SData.settings !== undefined) ? this.props.SData.settings.currency_symbol : "";
-   for(let i in this.props.SData){
-    currency = entities.decode(this.props.SData.settings.currency_symbol)  
-  }
-  // let currency =  this.props.SData.settings.currency;
+  render() { 
+   // let currency = (this.props.SData.settings !== undefined) ? this.props.SData.settings.currency_symbol : "";
+  //  for(let i in this.props.SData){
+  //   currency = entities.decode(this.props.SData.settings.currency_symbol)  
+  // }
+   let currency = ""; 
    return (
       <View style={{ flex: 1 }}>
         <Fab style={{ backgroundColor: '#f17d00' }} position="bottomRight">

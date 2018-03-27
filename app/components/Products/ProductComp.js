@@ -16,9 +16,13 @@ import {
   Body,
   Thumbnail,
   Left,
+  Switch,
+  Right,
   Form,
   Item,
   Input,
+  List,
+  ListItem,
   Container,
   Label,
   Picker,
@@ -161,18 +165,34 @@ export class ProductComp extends Component<Props> {
       <Input   type="date"   />
   </Item>     
    
-      <Segment>
-              <Button first><Text>Purchsable On</Text></Button>
-              <Button last active><Text>Purchsable Off</Text></Button>
-      </Segment> 
-       <Segment>
-              <Button first><Text>Instock</Text></Button>
-              <Button last active><Text>Out of stock</Text></Button>
-      </Segment> 
-       <Segment>
-              <Button first><Text>Shipping On</Text></Button>
-              <Button last active><Text>Shipping Off</Text></Button>
-      </Segment>  
+          <List>
+            <ListItem icon>
+              <Body>
+                <Text>Perchasable</Text>
+              </Body>
+              <Right>
+                <Switch value={true} />
+              </Right>
+            </ListItem> 
+            <ListItem icon>
+              <Body>
+                <Text>Instock</Text>
+              </Body>
+              <Right>
+                <Switch value={false} />
+              </Right>
+            </ListItem>
+            <ListItem icon>
+              <Body>
+                <Text>Shipping On</Text>
+              </Body>
+              <Right>
+                <Switch value={true} />
+              </Right>
+            </ListItem>
+            </List>
+
+       
   
 
   <Item last>
